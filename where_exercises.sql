@@ -1,66 +1,40 @@
-SELECT * FROM employees;
-/*  2. Find all current or previous employees with first names 'Irena', 'Vidya', or 'Maya' using IN. Enter a comment with the number of records returned. */
-
+# q2
 SELECT * FROM employees 
-	WHERE first_name 
-		IN ('Irena', 'Vidya', 'Maya'); -- 709 records of employees with irena, vidya or maya as their first name.
+	WHERE first_name
+	IN ('Irena', 'Vidya', 'Maya')
+	ORDER BY first_name; 
+# first person: Irena reutenauer, last person: Vidya Simmen
 
- # 3. same query as before but with or
+	
+#q3
 SELECT * FROM employees 
-	WHERE first_name = 'Irena' 
-		or first_name = 'Vidya' 
-		or first_name = 'Maya';
+	WHERE first_name
+	IN ('Irena', 'Vidya', 'Maya')
+	ORDER BY first_name, last_name;
+ #first person Irena Acton, Last person: Vidya Zweizig
+ 
+ #q4
+ SELECT * FROM employees 
+	WHERE first_name
+	IN ('Irena', 'Vidya', 'Maya')
+	ORDER BY last_name, first_name;
+# first person: Irena Acton, last person: Maya Zyda
 
-/*  4. Find all current or previous employees with first names 'Irena', 'Vidya', or 'Maya', using OR, and who is male. Enter a comment with the number of records returned.*/
-SELECT * FROM employees 
-	WHERE (first_name = 'Irena' 
-	OR first_name = 'Vidya' 
-	OR first_name = 'Maya')
-	AND	gender = 'M'; -- 441 records of employees with irena vidya or maya as their name and are male.
-
-/* 5. Find all current or previous employees whose last name starts with 'E'. Enter a comment with the number of employees whose last name starts with E.*/
+#q5
 SELECT * FROM employees
-	WHERE last_name LIKE 'E%'; -- 7330 employees with last name that starts with E
+	WHERE last_name like 'E%e'
+	ORDER BY emp_no;
+# 899 employees, first: 10021 Ramzi Erde, last: 499648 Tadahiro Erde
 
-/* 6. Find all current or previous employees whose last name starts or ends with 'E'. Enter a comment with the number of employees whose last name starts or ends with E. How many employees have a last name that ends with E, but does not start with E?*/
+#q6
 SELECT * FROM employees
-	WHERE last_name LIKE 'E%' -- 30723 employees with last name that starts or ends with E
-	OR last_name LIKE '%e';
-	
+	WHERE last_name like 'E%e'
+	ORDER BY hire_date DESC;
+# 899 employees returned, newest: Teiji Eldridge, longest: Sergi Erde
+
+#7
 SELECT * FROM employees
-	WHERE last_name LIKE 'E%' -- 899 employees with last name that starts or ends with E
-	AND last_name LIKE '%e';
-	
-SELECT * FROM employees
-	WHERE last_name NOT LIKE 'E%' -- 23393 employees that end with e and don't start with E
-	AND last_name LIKE '%e';
-
-/* 7. Find all current or previous employees employees whose last name starts and ends with 'E'. Enter a comment with the number of employees whose last name starts and ends with E. How many employees' last names end with E, regardless of whether they start with E?*/
-
-SELECT * FROM employees -- 899 employees that start and end with E
-	WHERE last_name LIKE 'E%'
-	AND last_name LIKE '%e';
-	
-select * from employees where last_name like '%e'; -- 24292 end with E
-
-/* 8. Find all current or previous employees hired in the 90s. Enter a comment with the number of employees returned.*/
-
-select * from employees where hire_date between '1990-01-01' and '1999-12-31'; -- 135214 employees 
-
-/* 9. Find all current or previous employees born on Christmas. Enter a comment with the number of employees returned.*/
-
-select * from employees where birth_date like '%-12-25'; -- 842 employees born on christmas
-
-/* 10. Find all current or previous employees hired in the 90s and born on Christmas. Enter a comment with the number of employees returned. */
-
-select * from employees 
-	where hire_date between '1990-01-01' and '1999-12-31'
-	and birth_date like '%-12-25'; -- there are 362 employees that fit this
-	
-/* 11. Find all current or previous employees with a 'q' in their last name. Enter a comment with the number of records returned.*/
-
-select * from employees where last_name like '%q%'; -- 1873 
-
-/* 12. Find all current or previous employees with a 'q' in their last name but not 'qu'. How many employees are found? */
-
-select * from employees where last_name not like '%qu%' and last_name like '%q%'; -- 547
+	WHERE birth_date like '%-12-25'
+	AND hire_date like '199%'
+	ORDER BY hire_date DESC, birth_date ASC
+# 362 employees, oldest last: Khun Bernini, youngest first: Alselm Cappello
