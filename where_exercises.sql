@@ -7,7 +7,8 @@ SELECT * FROM employees
 SELECT * FROM employees 
 	WHERE first_name = 'Irena' 
 		or first_name = 'Vidya' 
-		or first_name = 'Maya'; -- Q3
+		or first_name = 'Maya'
+		order by last_name, first_name; -- Q3
 
 /* Find all current or previous employees with first names 'Irena', 'Vidya', or 'Maya', using OR, and who is male. Enter a comment with the number of records returned.*/
 SELECT * FROM employees 
@@ -58,3 +59,6 @@ select * from employees where last_name like '%q%'; -- 1873
 /* Find all current or previous employees with a 'q' in their last name but not 'qu'. How many employees are found? */
 
 select * from employees where last_name not like '%qu%' and last_name like '%q%'; -- 547
+
+
+
