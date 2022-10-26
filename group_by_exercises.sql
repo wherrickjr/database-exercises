@@ -53,3 +53,52 @@ AS user_name,
 COUNT(*) AS duplicates
 FROM employees
 GROUP BY user_name;
+
+# Q9 B1 employees average salary
+SELECT emp_no, AVG(salary)
+FROM salaries
+GROUP BY emp_no;
+
+describe dept_emp;
+# B2
+SELECT dept_no, COUNT(emp_no)
+FROM dept_emp
+GROUP BY dept_no;
+
+#B3
+SELECT emp_no, COUNT(salary)
+FROM salaries
+GROUP BY emp_no;
+
+#B4
+SELECT emp_no, MAX(salary)
+FROM salaries
+GROUP BY emp_no;
+
+#B5
+SELECT emp_no, MIN(salary)
+FROM salaries
+GROUP BY emp_no;
+
+#B6
+SELECT emp_no, STD(salary)
+FROM salaries
+GROUP BY emp_no;
+
+# B7
+SELECT emp_no, MAX(salary)
+FROM salaries
+WHERE salary > 150000
+GROUP BY emp_no;
+
+# B8
+SELECT emp_no, AVG(salary)
+FROM salaries
+WHERE salary 
+BETWEEN 80000 AND 90000
+GROUP BY emp_no;
+
+
+
+
+
