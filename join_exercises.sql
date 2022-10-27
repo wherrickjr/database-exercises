@@ -16,7 +16,7 @@ FROM employees
 JOIN dept_manager
 ;
 
-# Q2 
+# Q2 current managers of departments
 SELECT departments.dept_name
 AS 'Department Name',
 CONCAT(first_name, ' ', last_name) AS 'Department Manager'
@@ -56,6 +56,61 @@ AND dept_emp.to_date LIKE '9999-%-%'
 GROUP BY titles.title
 ORDER BY titles.title;
 
--- Q5
+-- Q5 salary of all current managers
+SELECT departments.dept_name
+AS 'Department Name',
+CONCAT(first_name, ' ', last_name) AS 'Department Manager', salaries.salary
+FROM employees
+JOIN dept_manager
+ON dept_manager.emp_no = employees.emp_no
+JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+JOIN salaries
+ON dept_manager.emp_no = salaries.emp_no
+WHERE dept_manager.to_date LIKE '9999-%-%'
+AND salaries.to_date LIKE '9999-%-%'
+ORDER BY departments.dept_name;
 
-select * from depatments;
+-- Q6 Current number of employees in each department
+
+SELECT departments.dept_no, departments.dept_name, COUNT(dept_emp.emp_no)
+FROM departments
+join dept_emp
+on departments.dept_no = dept_emp.dept_no
+WHERE dept_emp.to_date LIKE '9999-%-%'
+GROUP BY departments.dept_no
+ORDER BY dept_no;
+
+-- Q7 DEPARTMENT WITH HIGHEST AVERAGE salary
+SELECT departments.dept_name, AVG(salaries.salary)
+FROM employees
+JOIN dept_emp
+ON employees.emp_no = dept_emp.emp_no
+JOIN salaries
+ON salaries.emp_no = employees.emp_no
+JOIN departments
+ON departments.dept_no = dept_emp.dept_no
+WHERE dept_emp.to_date LIKE '9999-%-%'
+AND salaries.to_date LIKE '9999-%-%'
+GROUP BY departments.dept_name
+ORDER BY AVG(salaries.salary) DESC
+LIMIT 1;
+
+-- 8 highest paid employee in Marketing
+
+SELECT employees.first_name, employees.last_name
+FROM employees
+JOIN salaries
+ON salaries.emp_no = employees.emp_no
+JOIN dept_emp
+ON employees.emp_no = dept_emp.emp_no
+JOIN departments
+ON dept_emp.dept_no = departments.dept_no
+WHERE dept_name = 'Marketing'
+ORDER BY salaries.salary DESC
+LIMIT 1;
+
+
+
+
+
