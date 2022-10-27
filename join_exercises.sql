@@ -110,6 +110,31 @@ WHERE dept_name = 'Marketing'
 ORDER BY salaries.salary DESC
 LIMIT 1;
 
+-- q9 current department manager with highest salary
+SELECT employees.first_name, employees.last_name, salaries.salary, departments.dept_name
+FROM employees
+JOIN dept_manager
+ON dept_manager.emp_no = employees.emp_no
+JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+JOIN salaries
+ON dept_manager.emp_no = salaries.emp_no
+WHERE dept_manager.to_date LIKE '9999-%-%'
+AND salaries.to_date LIKE '9999-%-%'
+ORDER BY salaries.salary DESC
+LIMIT 1;
+
+-- q10 department average salaries of all time rounded to the nearest integer
+SELECT departments.dept_name, ROUND(AVG(salaries.salary),0)
+FROM employees
+JOIN dept_emp
+ON employees.emp_no = dept_emp.emp_no
+JOIN salaries
+ON salaries.emp_no = employees.emp_no
+JOIN departments
+ON departments.dept_no = dept_emp.dept_no
+GROUP BY departments.dept_name
+ORDER BY AVG(salaries.salary) DESC
 
 
 
