@@ -135,5 +135,42 @@ GROUP BY departments.dept_name
 ORDER BY AVG(salaries.salary) DESC
 
 
+CONCAT(first_name, ' ', last_name) AS 'Employee Name', ;
 
+## bonus q11
+SELECT departments.dept_name
+AS 'Department Name',
+CONCAT(first_name, ' ', last_name) AS 'Department Manager'
+FROM employees
+JOIN dept_manager
+ON dept_manager.emp_no = employees.emp_no
+JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+WHERE dept_manager.to_date LIKE '9999-%-%';
 
+SELECT CONCAT(first_name, ' ', last_name) AS Employee_Name, departments.dept_name as Department_Name
+FROM employees
+JOIN dept_emp
+ON employees.emp_no = dept_emp.emp_no
+JOIN departments
+ON 	dept_emp.dept_no = departments.dept_no
+;
+-- Here is the answer!!!!!!!!!!
+SELECT g.Employee_Name, g.Department_Name, h.Department_Manager
+FROM (SELECT CONCAT(first_name, ' ', last_name) AS Employee_Name, departments.dept_name as Department_Name
+FROM employees
+JOIN dept_emp
+ON employees.emp_no = dept_emp.emp_no
+JOIN departments
+ON 	dept_emp.dept_no = departments.dept_no
+) AS g 
+JOIN (SELECT departments.dept_name
+AS Department_Name2,
+CONCAT(first_name, ' ', last_name) AS Department_Manager
+FROM employees
+JOIN dept_manager
+ON dept_manager.emp_no = employees.emp_no
+JOIN departments
+ON dept_manager.dept_no = departments.dept_no
+WHERE dept_manager.to_date LIKE '9999-%-%') AS h
+ON g.Department_Name = h.Department_Name2
