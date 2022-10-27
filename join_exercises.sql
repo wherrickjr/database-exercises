@@ -40,10 +40,8 @@ WHERE dept_manager.to_date LIKE '9999-%-%'
 AND employees.gender = 'F'
 ORDER BY departments.dept_name;
 
-# Q4
-SELECT * from departments
-LIMIT 10;
--- current employees working in customer service
+
+-- Q4 current employees working in customer service
 SELECT titles.title, COUNT(titles.title) as count
 FROM titles
 JOIN dept_emp
@@ -82,18 +80,18 @@ GROUP BY departments.dept_no
 ORDER BY dept_no;
 
 -- Q7 DEPARTMENT WITH HIGHEST AVERAGE salary
-SELECT departments.dept_name, AVG(salaries.salary)
-FROM employees
-JOIN dept_emp
-ON employees.emp_no = dept_emp.emp_no
-JOIN salaries
-ON salaries.emp_no = employees.emp_no
-JOIN departments
-ON departments.dept_no = dept_emp.dept_no
-WHERE dept_emp.to_date LIKE '9999-%-%'
-AND salaries.to_date LIKE '9999-%-%'
-GROUP BY departments.dept_name
-ORDER BY AVG(salaries.salary) DESC
+SELECT d.dept_name, ROUND(AVG(s.salary),2)
+FROM employees AS e
+JOIN dept_emp AS de
+ON e.emp_no = de.emp_no
+JOIN salaries AS s
+ON s.emp_no = e.emp_no
+JOIN departments AS d
+ON d.dept_no = de.dept_no
+WHERE de.to_date LIKE '9999-%-%'
+AND s.to_date LIKE '9999-%-%'
+GROUP BY d.dept_name
+ORDER BY AVG(s.salary) DESC
 LIMIT 1;
 
 -- 8 highest paid employee in Marketing
