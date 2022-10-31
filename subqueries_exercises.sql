@@ -25,8 +25,11 @@ JOIN titles
 ON employees.emp_no = titles.emp_no
 JOIN dept_emp
 ON employees.emp_no = dept_emp.emp_no
-WHERE titles.to_date > NOW()
-AND dept_emp.to_date > NOW();
+JOIN salaries
+ON salaries.emp_no = dept_emp.emp_no
+WHERE titles.to_date < NOW()
+AND dept_emp.to_date < NOW()
+AND salaries.to_date < NOW();
 
 ##q4 -- Leon DasSarma, Isamu Legleitner, Karsten Sigstam, and Hilary Kambil
 SELECT departments.dept_name
@@ -51,11 +54,13 @@ AND salaries.salary > (select avg(salary) from salaries);
 
 ## q6 list of current employees that earn a salary within one standard deviation of the highest salary
 
-select employees.first_name, salaries.salary FROM employees
+select COUNT(salaries.salary) FROM employees
 JOIN salaries
 ON employees.emp_no = salaries.emp_no
 WHERE salaries.salary BETWEEN (Select max(salary)- std(salary) from salaries)
-AND (select max(salary) + std(salary) from salaries)
+AND (select max(salary) + std(salary) from
+ salaries)
 AND salaries.to_date > now();
 
+describe dept_emp
 
