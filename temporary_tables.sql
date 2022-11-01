@@ -25,13 +25,14 @@ DELETE FROM my_numbers WHERE N > 4;
 
 UPDATE my_numbers SET N = N+ 1;
 
+
+#1 question
 create temporary table noether_2026.employees_with_departments as select first_name, last_name, dept_name 
 from employees
 join dept_emp using(emp_no)
 join departments using(dept_no)
 where dept_emp.to_date > now();
 
-select * from noether_2026.employees_with_departments as p;
 
 alter table noether_2026.employees_with_departments add full_name VARCHAR(100);
 
