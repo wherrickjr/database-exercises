@@ -2,8 +2,7 @@ use employees;
 describe dept_emp;
 
 # number 1, table with first_name, last_name, dept_no, start date, end date, and 1 if current employee, 0 if not current employee.
-select e.first_name, e.last_name, d.dept_no, d.from_date, d.to_date,
-if (d.to_date > now(), True, False) as is_current_employee
+select e.first_name, e.last_name, d.dept_no, d.from_date, d.to_date, to_date > now() as is_current_employee
 from employees as e
 join dept_emp as d
 using (emp_no);
@@ -56,7 +55,7 @@ group by dept_group;
 
 
 
-#another way of doing number 3
+#another way of doing number 2026
 
 select last_name,
 case
@@ -80,5 +79,3 @@ when last_name like 'q%' then 'I-Q'
 else 'R-Z'
 end as alpha_group
 from employees;
-
-asdfasd
