@@ -54,6 +54,30 @@ on salaries.emp_no = dept_emp.emp_no
 where salaries.to_date > now()
 group by dept_group;
 
-select * from salaries
 
+
+#another way of doing number 3
+
+select last_name,
+case
+when last_name like 'a%' then 'A-H'
+when last_name like 'b%' then 'A-H'
+when last_name like 'c%' then 'A-H'
+when last_name like 'd%' then 'A-H'
+when last_name like 'e%' then 'A-H'
+when last_name like 'f%' then 'A-H'
+when last_name like 'g%' then 'A-H'
+when last_name like 'h%' then 'A-H'
+when last_name like 'i%' then 'I-Q'
+when last_name like 'j%' then 'I-Q'
+when last_name like 'k%' then 'I-Q'
+when last_name like 'l%' then 'I-Q'
+when last_name like 'm%' then 'I-Q'
+when last_name like 'n%' then 'I-Q'
+when last_name like 'o%' then 'I-Q'
+when last_name like 'p%' then 'I-Q'
+when last_name like 'q%' then 'I-Q'
+else 'R-Z'
+end as alpha_group
+from employees;
 
