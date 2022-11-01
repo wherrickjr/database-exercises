@@ -36,8 +36,19 @@ select * from noether_2026.birthday_decades;
 
 ## number 3 answer: 182886 born in 1950s, and 117138 born in 1960s
 
+
+## here is another way to do number 3 without temp table
+
+select count(*),
+case
+when birth_date >= '1960-01-01' then '60s'
+when birth_date >= '1950-01-01' then '50s'
+end as 'birth_decade'
+from employees
+group by birth_decade;
+
 #question 4
-select AVG(salaries.salary),
+select round(AVG(salaries.salary),2) as average_salary,
 case
 when dept_name in ("Development", "Research") then 'R&D'
 when dept_name in ("Sales", "Marketing") then 'Sales & Marketing'
@@ -46,16 +57,17 @@ when dept_name in ("finance", "Human Resources") then 'Finance & HR'
 else 'Customer Service'
 end as dept_group
 from dept_emp
-join departments
-on dept_emp.dept_no = departments.dept_no
-join salaries
-on salaries.emp_no = dept_emp.emp_no
+	join departments
+		using(dept_no)
+	join salaries
+		using(emp_no)
 where salaries.to_date > now()
+and dept_emp.to_date > now()
 group by dept_group;
 
 
 
-#another way of doing number 2026
+#another way of doing number 2
 
 select last_name,
 case
@@ -78,4 +90,13 @@ when last_name like 'p%' then 'I-Q'
 when last_name like 'q%' then 'I-Q'
 else 'R-Z'
 end as alpha_group
+from employees;
+
+--  or! we could do for number 2:
+select first_name, last_name, left(last_name,1),
+case
+when left(last_name, 1) <= 'H' then 'A-H'
+when left(last_name,1) <= 'Q' then 'A-H'
+else 'R-Z'
+end as 'alpha_group'
 from employees;
