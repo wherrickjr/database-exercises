@@ -15,9 +15,45 @@ select first_name, last_name,
 	case
 		when last_name rlike '^[a-h]' then 'A-H'
 		when last_name rlike '^[i-q]' then 'I-Q'
-		when last_name rlike '^[r-z]' then 'R-Z'
-		else null
-	end as 'alpha_group'
+		else 'R-Z'
+	end as alpha_group
 from employees;
 
 #3 how many employees were born in each decade?
+
+create temporary table noether_2026.birthday_decades(
+	n int unsigned not null);
+	
+insert into noether_2026.birthday_decades(n) values (1950), (1960),(1970), (1980);
+
+alter table noether_2026.birthday_decades add count_birth_date int;
+
+update noether_2026.birthday_decades set count_birth_date = (select count(emp_no) from employees where birth_date like '195%-%-%' ) where n = '1950';
+update noether_2026.birthday_decades set count_birth_date = (select count(emp_no) from employees where birth_date like '196%-%-%' ) where n = '1960';
+update noether_2026.birthday_decades set count_birth_date = (select count(emp_no) from employees where birth_date like '197%-%-%' ) where n = '1970';
+update noether_2026.birthday_decades set count_birth_date = (select count(emp_no) from employees where birth_date like '198%-%-%' ) where n = '1980';
+
+select * from noether_2026.birthday_decades;
+
+## number 3 answer: 182886 born in 1950s, and 117138 born in 1960s
+
+#question 4
+select AVG(salaries.salary),
+case
+when dept_name in ("Development", "Research") then 'R&D'
+when dept_name in ("Sales", "Marketing") then 'Sales & Marketing'
+when dept_name in ("Production", "Quality Managment") then 'Prod & QM'
+when dept_name in ("finance", "Human Resources") then 'Finance & HR'
+else 'Customer Service'
+end as dept_group
+from dept_emp
+join departments
+on dept_emp.dept_no = departments.dept_no
+join salaries
+on salaries.emp_no = dept_emp.emp_no
+where salaries.to_date > now()
+group by dept_group;
+
+select * from salaries
+
+
